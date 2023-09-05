@@ -1,7 +1,7 @@
 /// Support for doing something awesome.
 ///
 /// More dartdocs go here.
-library;
+library truesight_core;
 
 export 'data_structure/data_structure.dart';
 export 'filters/filters.dart';
