@@ -76,10 +76,8 @@ abstract class DataModel implements DataSerializable {
           continue;
         }
 
-        final ModelType type = _modelTypes[field.genericType]!;
-
         if (field is JsonObject) {
-          field.value = type.constructor();
+          field.value = create<DataModel>(field.genericType!);
           if (json.containsKey(field.name) && json[field.name] != null) {
             field.fromJSON(json[field.name]);
           }
@@ -88,15 +86,7 @@ abstract class DataModel implements DataSerializable {
 
         if (field is JsonList) {
           if (json.containsKey(field.name) && json[field.name] is List) {
-            final length = json[field.name].length;
-
-            for (var i = 0; i < length; i++) {
-              final instance = type.constructor();
-              instance.fromJSON(json[field.name][i]);
-              field.value?[i] = instance;
-            }
-          } else {
-            field.value = [];
+            field.fromJSON(json[field.name]);
           }
           continue;
         }

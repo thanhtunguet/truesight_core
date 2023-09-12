@@ -7,6 +7,7 @@ class JsonList<T extends DataModel> extends JsonType<List<T>> {
     super.defaultValue,
   }) {
     genericType = T;
+    value = [];
   }
 
   @override
