@@ -8,10 +8,6 @@ abstract class HttpRepository {
 
   bool get useInterceptor;
 
-  StreamSubscription<String>? serverSubscription;
-
-  Stream<String>? get serverStream;
-
   String basePath;
 
   /// Construct a new HttpRepository instance with baseUrl string
@@ -21,19 +17,9 @@ abstract class HttpRepository {
   HttpRepository(this.basePath) : super() {
     dio = Dio();
 
-    if (serverStream != null) {
-      serverSubscription = serverStream!.listen((baseUrl) {
-        this.baseUrl = baseUrl;
-      });
-    }
-
     if (useInterceptor) {
       dio.interceptors.add(interceptorsWrapper);
     }
-  }
-
-  setInterceptors(InterceptorsWrapper interceptorsWrapper) {
-    this.interceptorsWrapper = interceptorsWrapper;
   }
 
   String url(

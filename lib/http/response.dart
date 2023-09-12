@@ -10,29 +10,35 @@ extension ExtendedResponse on Response {
   }
 
   /// Convert response body to a list of DataModel
-  List<T> list<T extends DataModel>(Type type) {
-    return data.map((element) {
-      T model = DataModel.create<T>(type);
-      model.fromJSON(element);
-      return model;
-    });
+  List<T> bodyAsList<T extends DataModel>(Type type) {
+    var result = <T>[];
+
+    if (data is List) {
+      for (var element in data) {
+        var model = DataModel.create<T>(type);
+        model.fromJSON(element);
+        result.add(model);
+      }
+    }
+
+    return result;
   }
 
   /// Get response body as text string
-  String text() {
+  String bodyAsString() {
     return data.toString();
   }
 
   // Get response body as numeric
-  num number() {
+  num bodyAsNumber() {
     return num.parse(data.toString());
   }
 
-  int integer() {
+  int bodyAsInteger() {
     return int.parse(data.toString());
   }
 
-  double decimal() {
+  double bodyAsDecimal() {
     return double.parse(data.toString());
   }
 }
