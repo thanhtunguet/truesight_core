@@ -49,9 +49,13 @@ abstract class DataFilter {
     final Map<String, dynamic> result = {
       'skip': skip,
       'take': take,
-      'orderBy': orderBy,
-      'orderType': orderTypeAsString(),
     };
+    if (orderBy != null) {
+      result["orderBy"] = orderBy;
+    }
+    if (orderType != null) {
+      result["orderType"] = orderTypeAsString();
+    }
 
     for (final field in fields) {
       result[field.fieldName] = field.toJSON();

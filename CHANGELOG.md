@@ -1,3 +1,6 @@
+## 2310.17.1
+- Add null checks
+
 ## 2309.12.1
 - Republish
 
