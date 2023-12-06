@@ -1,4 +1,4 @@
-import '../data_structure/data_structure.dart';
+import 'package:truesight_core/data_structure/data_structure.dart';
 
 part 'json_boolean.dart';
 part 'json_date.dart';
