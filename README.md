@@ -23,12 +23,61 @@ Core functions for TrueSight packages.
 
 This package can be installed in any Dart application.
 
+Để cài đặt:
+
+```bash
+flutter pub add truesight_core
+```
+
 ## Usage
 
-Example currently contains nothing.
+### Json serialization
 
 ```dart
-const like = 'sample';
+import 'package:truesight_core/truesight_core.dart';
+
+class User extends DataModel {
+    JsonNumber id = JsonNumber("id");
+
+    JsonString name = JsonString("name");
+
+    JsonBoolean isAdmin = JsonBoolean("isAdmin");
+
+    JsonDate birthday = JsonDate("birthday");
+
+    JsonList<User> members = JsonList<User>("members");
+
+    JsonObject<User> manager = JsonObject<User>("manager");
+}
+```
+
+### Repository pattern
+
+```dart
+import 'package:truesight_core/truesight_core.dart';
+
+class UserRepository extends Repository {
+
+}
+```
+
+### Backend-compatible data structures
+
+```dart
+class DataFilter {
+    int skip = 0;
+
+    int take = 10;
+
+    String? orderBy;
+
+    OrderType? orderType;
+}
+
+enum OrderType {
+    asc,
+    desc,
+}
 ```
 
 ## Additional information
