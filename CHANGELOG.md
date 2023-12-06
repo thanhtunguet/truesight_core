@@ -1,3 +1,6 @@
+## 2312.6.1
+- Remove Equatable from DataFilter
+
 ## 2310.17.1
 - Add null checks
 
