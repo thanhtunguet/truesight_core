@@ -11,75 +11,163 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-Core functions for TrueSight packages.
+Features
+--------
 
-## Features
+-   JSON Handling
+-   Data filter types compatible with the backend
+-   Converting HTTP responses to various formats
 
-- Json serialization
-- Repository pattern
-- Backend-compatible data structures
+Installation
+------------
 
-## Getting started
+To install the package:
 
-This package can be installed in any Dart application.
-
-Để cài đặt:
-
-```bash
+```zsh
 flutter pub add truesight_core
 ```
 
-## Usage
+How to Use
+----------
 
-### Json serialization
+### JSON Handling
+
+The package defines the following JSON data types:
+
+-   `JsonBoolean`: for `bool` type
+-   `JsonDate`: for `DateTime` type
+-   `JsonList`: for `List<Object>` type
+-   `JsonNumber`: for `num` type
+-   `JsonObject`: for `Object` type
+-   `JsonString`: for `String` type
+
+#### Model Definition
+
+Example:
 
 ```dart
-import 'package:truesight_core/truesight_core.dart';
-
 class User extends DataModel {
-    JsonNumber id = JsonNumber("id");
-
-    JsonString name = JsonString("name");
-
+    //
     JsonBoolean isAdmin = JsonBoolean("isAdmin");
 
-    JsonDate birthday = JsonDate("birthday");
+    JsonString username = JsonString("username");
 
-    JsonList<User> members = JsonList<User>("members");
-
-    JsonObject<User> manager = JsonObject<User>("manager");
+    JsonDate dateOfBirth = JsonDate("dateOfBirth");
+    //
 }
 ```
 
-### Repository pattern
+Usage:
+
 
 ```dart
-import 'package:truesight_core/truesight_core.dart';
-
-class UserRepository extends Repository {
-
-}
+JsonType fieldName = JsonType("jsonFieldName");
 ```
 
-### Backend-compatible data structures
+To convert to and from JSON:
 
 ```dart
-class DataFilter {
-    int skip = 0;
+User.fromJSON(Map<String, dynamic> json);
 
-    int take = 10;
+final Map<String, dynamic> json = User.toJSON(); // Dart Map
+
+final String jsonString = User.toString(); // JSON string
+```
+
+### AdvancedFilter
+
+Filter types:
+
+-   `DateFilter`: for date-type fields
+-   `StringFilter`: for `string` type fields
+-   `NumberFilter`: for numeric fields
+-   `GuidFilter`: for key fields (primary | foreign) of Guid type
+-   `IdFilter`: for key fields (primary | foreign) of integer Id type
+
+Example filter class:
+
+```dart
+class UserFilter extends DataFilter {
+    StringFilter username = StringFilter();
+
+    DateFilter dateOfBirth = DateFilter();
+
+    // Default fields:
+
+    int skip;
+
+    int take;
 
     String? orderBy;
 
     OrderType? orderType;
 }
+```
 
-enum OrderType {
-    asc,
-    desc,
+#### OrderType
+
+There are 2 order types:
+
+```dart
+OrderType.asc; // Ascending
+
+OrderType.desc; // Descending
+```
+
+### HTTPRepository
+
+A repository is a class containing methods to call corresponding APIs for a Controller / API group at the backend.
+
+Example of creating a repository:
+
+```dart
+@singleton // This is a GetIt annotation => Make the class singleton instance
+class AccountRepository extends HttpRepository {
+  // This tells the repository to use interceptor to transform every request
+  @override
+  bool get useInterceptor => true;
+
+  // This is InterceptorsWrapper, used along with `useInterceptor = true`
+  @override
+  InterceptorsWrapper interceptorsWrapper = globalInterceptorsWrapper;
+
+  // Base URL, for example: [https://example.com](https://example.com)
+  // Should use `flutter_dotenv` to configure the apiBaseUrl,
+  @override
+  String get baseUrl => dotenv.apiBaseUrl;
+
+  AccountRepository() : super("api/prefix");
+
+  Future<AppUser> login(String username, String password) {
+    return post(
+      url("login"),
+      data: {
+        "username": username,
+        "password": password,
+      },
+    ).then(
+      (Response response) => response.body<AppUser>(AppUser),
+    );
+  }
+
+  Future<AppUser> getProfile() {
+    return post(
+      url("get"),
+      data: {},
+    ).then(
+      (Response response) => response.body<AppUser>(AppUser),
+    );
+  }
+
+  Future<Map<String, dynamic>> refreshToken() {
+    return post(
+      url("refresh-token"),
+      data: {},
+    ).then(
+      (Response response) => response.data,
+    );
+  }
 }
 ```
 
-## Additional information
-
-Nothing here.
+This document outlines the core features of the Truesight package for Dart and Flutter, detailing its JSON handling capabilities, filter types, and methods for handling HTTP responses, along with installation and usage instructions.
