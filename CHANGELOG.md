@@ -1,3 +1,7 @@
+## 2401.4.1
+
+- Thêm báo lỗi khi parse JSON
+
 ## 2312.18.1
 
 - Documentation

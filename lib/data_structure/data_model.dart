@@ -48,47 +48,55 @@ abstract class DataModel implements DataSerializable {
               : {};
 
       for (final field in fields) {
-        if (errors.containsKey(field.name)) {
-          field.error = errors[field.name];
-        }
-
-        if (warnings.containsKey(field.name)) {
-          field.warning = warnings[field.name];
-        }
-
-        if (informations.containsKey(field.name)) {
-          field.information = informations[field.name];
-        }
-
-        if (field is JsonString ||
-            field is JsonBoolean ||
-            field is JsonNumber) {
-          field.value = json[field.name];
-          continue;
-        }
-
-        if (field is JsonDate) {
-          if (json.containsKey(field.name) && json[field.name] != null) {
-            field.value = DateTime.parse(json[field.name]);
-          } else {
-            field.value = null;
+        try {
+          if (errors.containsKey(field.name)) {
+            field.error = errors[field.name];
           }
-          continue;
-        }
 
-        if (field is JsonObject) {
-          field.value = create<DataModel>(field.genericType!);
-          if (json.containsKey(field.name) && json[field.name] != null) {
-            field.fromJSON(json[field.name]);
+          if (warnings.containsKey(field.name)) {
+            field.warning = warnings[field.name];
           }
-          continue;
-        }
 
-        if (field is JsonList) {
-          if (json.containsKey(field.name) && json[field.name] is List) {
-            field.fromJSON(json[field.name]);
+          if (informations.containsKey(field.name)) {
+            field.information = informations[field.name];
           }
-          continue;
+
+          if (field is JsonString ||
+              field is JsonBoolean ||
+              field is JsonNumber) {
+            field.value = json[field.name];
+            continue;
+          }
+
+          if (field is JsonDate) {
+            if (json.containsKey(field.name) && json[field.name] != null) {
+              field.value = DateTime.parse(json[field.name]);
+            } else {
+              field.value = null;
+            }
+            continue;
+          }
+
+          if (field is JsonObject) {
+            field.value = create<DataModel>(field.genericType!);
+            if (json.containsKey(field.name) && json[field.name] != null) {
+              field.fromJSON(json[field.name]);
+            }
+            continue;
+          }
+
+          if (field is JsonList) {
+            if (json.containsKey(field.name) && json[field.name] is List) {
+              field.fromJSON(json[field.name]);
+            }
+            continue;
+          }
+        } catch (error) {
+          final message =
+              "Error while parsing field ${field.name}: ${error.toString()}";
+          print(message);
+          Sentry.captureMessage(message);
+          Sentry.captureException(error);
         }
       }
       return;
