@@ -6,14 +6,6 @@ abstract interface class AbstractFilter implements DataSerializable {
 
   AbstractFilter(this.fieldName);
 
-  /// Deserialize data from JSON
-  @override
-  void fromJSON(dynamic json);
-
-  /// Convert this filter to JSON
-  @override
-  Map<String, dynamic> toJSON();
-
   /// Convert this filter directly to JSON string
   @override
   String toString() {

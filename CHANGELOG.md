@@ -1,3 +1,7 @@
+## 2401.11.1
+
+- Chỉnh sửa cú pháp
+
 ## 2401.4.1
 
 - Thêm báo lỗi khi parse JSON

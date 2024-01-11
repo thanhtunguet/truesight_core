@@ -1,6 +1,6 @@
 part of 'json.dart';
 
-class JsonObject<T extends DataModel> extends JsonType<T> {
+class JsonObject<T extends DataModel> extends JsonType<T> implements JsonObjectType {
   JsonObject(
     super.name, {
     super.isRequired,
@@ -11,7 +11,7 @@ class JsonObject<T extends DataModel> extends JsonType<T> {
 
   @override
   void fromJSON(dynamic value) {
-    final ModelType typeMapping = DataModel.getType(genericType!);
+    final ModelType typeMapping = DataModel.getType(genericType);
     final T instance = typeMapping.constructor() as T;
     if (value != null) {
       instance.fromJSON(value);
@@ -23,4 +23,7 @@ class JsonObject<T extends DataModel> extends JsonType<T> {
   toJSON() {
     return value?.toJSON();
   }
+
+  @override
+  late Type genericType;
 }

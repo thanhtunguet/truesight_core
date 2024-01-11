@@ -1,6 +1,10 @@
 part of 'json.dart';
 
-class JsonDate extends JsonType<DateTime?> {
+abstract interface class IJsonDate {
+  String format(String format);
+}
+
+class JsonDate extends JsonType<DateTime?> implements IJsonDate {
   JsonDate(
     super.name, {
     super.isRequired,
@@ -19,5 +23,10 @@ class JsonDate extends JsonType<DateTime?> {
   @override
   toJSON() {
     return value?.toIso8601String();
+  }
+
+  @override
+  String format(String format) {
+    return DateFormat(format).format(value!);
   }
 }

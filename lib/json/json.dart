@@ -1,5 +1,7 @@
+import 'package:intl/intl.dart';
 import 'package:truesight_core/data_structure/data_structure.dart';
 
+part 'json_object_type.dart';
 part 'json_boolean.dart';
 part 'json_date.dart';
 part 'json_list.dart';
@@ -9,12 +11,10 @@ part 'json_string.dart';
 
 typedef DataModelNewInstance = DataModel Function();
 
-interface class JsonType<T> implements DataSerializable {
+abstract interface class JsonType<T> implements DataSerializable {
   final String name;
 
   final Type type = T;
-
-  Type? genericType;
 
   bool isRequired;
 
