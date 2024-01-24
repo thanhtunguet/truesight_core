@@ -1,3 +1,9 @@
+## 2401.24.1
+
+### Added
+
+- Added string and DateTime extensions
+
 ## 2401.11.1
 
 - Chỉnh sửa cú pháp

@@ -27,6 +27,6 @@ class JsonDate extends JsonType<DateTime?> implements IJsonDate {
 
   @override
   String format(String format) {
-    return DateFormat(format).format(value!);
+    return value!.format(format);
   }
 }

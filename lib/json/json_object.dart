@@ -1,6 +1,7 @@
 part of 'json.dart';
 
-class JsonObject<T extends DataModel> extends JsonType<T> implements JsonObjectType {
+class JsonObject<T extends DataModel> extends JsonType<T>
+    implements JsonObjectType {
   JsonObject(
     super.name, {
     super.isRequired,

@@ -132,4 +132,9 @@ abstract class DataModel implements DataSerializable {
 
     return result;
   }
+
+  @override
+  String toString() {
+    return jsonEncode(toJSON());
+  }
 }
