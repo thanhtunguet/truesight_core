@@ -1,6 +1,6 @@
 name: truesight_core
 description: Core functions for TrueSight packages
-version: 2401.24.1
+version: 2401.24.2
 # repository: https://github.com/my_org/my_repo
 
 homepage: https://github.com/thanhtunguet
@@ -16,7 +16,7 @@ dependencies:
   dio_cookie_manager: ^3.1.1
   equatable: ^2.0.5
   intl: ^0.19.0
-  path: ^1.9.0
+  path: ^1.8.3
   sentry: ^7.14.0
   # path: ^1.8.0
 

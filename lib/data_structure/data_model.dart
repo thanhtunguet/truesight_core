@@ -78,7 +78,7 @@ abstract class DataModel implements DataSerializable {
           }
 
           if (field is JsonObject) {
-            field.value = create<DataModel>(field.genericType!);
+            field.value = create<DataModel>(field.genericType);
             if (json.containsKey(field.name) && json[field.name] != null) {
               field.fromJSON(json[field.name]);
             }

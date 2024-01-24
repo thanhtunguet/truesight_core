@@ -1,3 +1,7 @@
+## 2401.24.2
+
+- Update path version
+
 ## 2401.24.1
 
 ### Added
