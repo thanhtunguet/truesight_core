@@ -15,7 +15,7 @@ dependencies:
   dio: ^5.4.0
   dio_cookie_manager: ^3.1.1
   equatable: ^2.0.5
-  intl: ^0.19.0
+  intl: ^0.18.1
   path: ^1.8.3
   sentry: ^7.14.0
   # path: ^1.8.0
